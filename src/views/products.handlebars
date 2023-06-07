@@ -1,0 +1,54 @@
+<table class="table table-dark table-striped text-center">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Title</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Price</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Owner</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  {{#each data.docs}}
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td><a href="/api/products/{{_id}}">{{title}}</a></td>
+      <td>{{category}}</td>
+      <td>{{price}}</td>
+      <td>{{stock}}</td>
+      <td>{{owner.email}}</td>
+      <td>
+      <button onclick="deleteProd('{{_id}}')" id="" class="btn btn-danger">X</button>
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item {{#if data.hasPrevPage}}{{else}}disabled{{/if}}">
+            <a class="page-link" href="/products?page={{data.prevPage}}">Anterior</a>
+        </li>
+
+        {{#each front_pagination}}
+            <li class="page-item {{#if this.active}}active{{/if}}">
+                <a class="page-link" href="/products?page={{this.page}}">{{this.page}}</a>
+            </li>
+        {{/each}}
+
+        <li class="page-item {{#if data.hasNextPage}}{{else}}disabled{{/if}}">
+            <a class="page-link" href="/products?page={{data.nextPage}}">Siguiente</a>
+        </li>
+    </ul>
+</nav>
+<a href="/api/products"><button class="btn btn-primary">Crear un Producto</button></a>
+<a href="/session/current"><button class="btn btn-primary">Ver mi Perfil</button></a>
+<a href="/api/carts/{{user.cart._id}}"><button class="btn btn-primary">Ir a mi Carrito</button></a>
+<a href="/api/carts/purchase"><button class="btn btn-primary">Mis Tickets</button></a>
+{{#if (eq user.role "admin")}}
+<a href="/api/users"><button class="btn btn-warning">Lista de Usuarios</button></a>
+{{/if}}
+
+<script src="/js/product.js"></script>
